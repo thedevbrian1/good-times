@@ -14,7 +14,7 @@ function MobileNav() {
     return (
         <>
             <div className='bg-transparent h-16 flex justify-between items-center'>
-                <MenuIcon className='h-7 w-7 ml-8' onClick={handleDrawerOpen} />
+                <MenuIcon className='h-7 w-7 ml-8 text-white' onClick={handleDrawerOpen} />
                 {/* {isOpen ?
                     <XIcon className='h-8 w-8 ml-8' onClick={handleDrawerOpen} />:
                     <MenuIcon className='h-7 w-7 ml-8' onClick={handleDrawerOpen} />

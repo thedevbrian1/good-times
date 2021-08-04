@@ -16,11 +16,18 @@ module.exports = {
       },
       mt: {
         '-16': '-4rem',
-      }
+      },
+      colors: {
+        'brown': '#964B00',
+        'footer': '#3E496C',
+        'social': '#2F4858',
+      },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }

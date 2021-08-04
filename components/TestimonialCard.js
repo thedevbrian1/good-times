@@ -1,9 +1,10 @@
+import Image from 'next/image'
 export default function TestimonialCard(){
     return (
         <div className='flex w-96 h-64 border-solid border-red-500 border-2'>
             <img src="/images/hero.jpg" alt="" width='150' height='100' />
             <div className='flex flex-col justify-between'>
-                <img src="/left-quote.svg" alt="Left quotation mark" height='20' width='20' className='mx-3 mt-2 text-gray-500' />
+                <img src="/left-quote.svg" alt="Left quotation mark" height='20' width='20' className='mx-3 mt-4 text-gray-500' />
                 <p className='px-4 py-1'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos earum voluptates molestias animi 
                 </p>

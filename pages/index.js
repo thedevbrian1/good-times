@@ -2,13 +2,38 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
 //import Masonry from 'react-masonry-component'
 import styles from '../styles/Home.module.css'
 import NavBar from '../components/Nav'
 import Layout from '../components/Layout'
 import Card from '../components/Card'
 import TestimonialCard from '../components/TestimonialCard'
+import DestinationImg from '../components/DestinationImg'
 export default function Home() {
+  const responsive = {
+    largeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+      slidesToSlide: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 3
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1
+    }
+  };
   const images = [
     {
       name: 'Amboseli',
@@ -81,7 +106,7 @@ export default function Home() {
           </div>
 
           <div className='p-4'>
-            <h1 className='text-black text-2xl md:text-4xl text-center'>Most Popular Packages</h1>
+            <h1 className='text-brown text-2xl md:text-4xl text-center'>Most Popular Packages</h1>
             <div className='w-full flex flex-col md:flex-row items-center  justify-between md:px-16 py-8'>
               <Card />
               <Card /> 
@@ -90,7 +115,7 @@ export default function Home() {
             
           </div>
 
-          <div className='bg-pink-800 w-full '>
+          <div className='bg-purple-500 w-full '>
             <div className='mx-10 md:mx-20 py-10'>
               <h1 className='text-white py-5 text-2xl md:text-4xl text-center'>Our Packages Include</h1>
               <div className='flex flex-col md:flex-row items-center md:justify-between mt-6 md:mt-8'>
@@ -120,32 +145,96 @@ export default function Home() {
           </div>
 
           <div className='p-8'>
-            <h1 className='text-black py-5 text-2xl md:text-4xl text-center'>Popular Destinations</h1>
-            <ResponsiveMasonry
+            <h1 className='text-brown py-5 text-2xl md:text-4xl text-center'>Popular Destinations</h1>
+            <div className='p-2 md:p-10 flex flex-col md:flex-row items-center md:justify-evenly'>
+              <DestinationImg />
+              <DestinationImg />
+              <DestinationImg />
+              <DestinationImg />
+            </div>
+            
+            {/* <ResponsiveMasonry
               columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
             >
               <Masonry gutter="10" >
                 {
                   images.map((image, index) => (
-                    <div key={index} className='bg-black h-full'>
+                    <div key={index} className='bg-black h-full relative top-0'>
                         <img src={image.href} alt={image.name} />
-                        {/* <div className=' bg-black bg-opacity-50 w-full h-full'>
-                          <h6>{image.name}</h6>
-                        </div> */}
+                        
                         <h6>{image.name}</h6>
                     </div>
                     
                   ))
                 }
               </Masonry>
-            </ResponsiveMasonry>
+            </ResponsiveMasonry> */}
             
           </div>
 
           <div className='px-5'>
-            <TestimonialCard />
+            <h1 className='text-brown py-5 text-2xl md:text-4xl text-center'>What our clients say</h1>
+            <div className='p-10'>
+              <Carousel
+                swipeable={true}
+                draggable={true}
+                showDots={true}
+                responsive={responsive}
+                ssr={true}
+                infinite={true}
+                // autoPlay={true}
+                // autoPlaySpeed={1000}
+                keyBoardControl={true}
+                customTransition="all .5"
+                transitionDuration={500}
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+                dotListClass="custom-dot-list-style"
+                itemClass="carousel-item-padding-40-px"
+              >
+                <TestimonialCard />
+                <TestimonialCard />
+                <TestimonialCard />
+                <TestimonialCard />
+                <TestimonialCard />
+                <TestimonialCard />
+              </Carousel>
+            </div>
           </div>
-          
+
+          <div className='flex flex-col md:flex-row w-full h-auto md:h-screen border-solid border-red-500 border-2 mt-9 '>
+            <div className='bg-black w-full md:w-1/2 h-full flex flex-col justify-center items-center'>
+              <h1 className='text-white text-2xl md:text-5xl font-semibold mt-12'>We'd love to hear from you</h1>
+              <Image src='/contact-us.svg' alt='svg consisting of call, text and location icons' width={280} height={280} />
+            </div>
+            <div className='bg-purple-400 w-full md:w-1/2 h-full flex flex-col justify-center items-center pb-12'>
+              <h1 className='text-black text-2xl md:text-4xl font-semibold mt-12 mb-5'>Contact Us</h1>
+
+              <form className='w-2/3'>
+                <div className='mb-4'>
+                  <label htmlFor="name">Full Name</label>
+                  <input type="text" id='name' placeholder='John Doe' className='px-6 w-full rounded-md py-2 text-gray-700 focus:outline-none' />
+                </div>
+                
+                <div className='mb-4'>
+                  <label htmlFor="email">Email</label>
+                  <input type="email" id='email' placeholder='johndoe@gmail.com' className='px-6 w-full rounded-md py-2 text-gray-700 focus:outline-none' />
+                </div>
+                
+                <div className='mb-4'>
+                  <label htmlFor="phone">Phone</label>
+                  <input type="text" id='phone' placeholder='0712 345 678' className='px-6 w-full rounded-md py-2 text-gray-700 focus:outline-none' />
+                </div>
+                
+                <div className='mb-4'>
+                  <label htmlFor="message">Message</label>
+                  <input type="text" id='message' placeholder='Your message' className='px-6 w-full h-12 rounded-md py-2 text-gray-700 focus:outline-none' />
+                </div>
+                
+                <button type='submit' className='w-full mt-6 py-2 rounded-md bg-blue-500 text-gray-100 hover:bg-blue-600 focus:outline-none'>Submit</button>
+              </form>
+            </div>
+          </div>
       </Layout>
       {/* <main>
         <Image
