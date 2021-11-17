@@ -10,6 +10,8 @@ module.exports = {
       },
       backgroundImage: theme => ({
         'hero': "url('/images/hero.jpg')",
+        'about': "url('/images/giraffe-silhouette.jpg')",
+        'packages': "url('/images/astronaut.jpg')",
       }),
       top: {
         '-16': '-4rem',
@@ -21,6 +23,12 @@ module.exports = {
         'brown': '#964B00',
         'footer': '#3E496C',
         'social': '#2F4858',
+      },
+      maxWidth: {
+        'max-w-screen-2xl': '1400px'
+      },
+      fontFamily: {
+        'display': ['Quicksand'],
       },
     },
   },
