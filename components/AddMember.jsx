@@ -22,103 +22,103 @@ export default function AddMember() {
     const [percent, setPercent] = useState(100);
     const [errorMembers, setErrorMembers] = useState(null);
 
-    function handleNameChange(e) {
-        setName(e.target.value);
-    }
+    // function handleNameChange(e) {
+    //     setName(e.target.value);
+    // }
 
-    function handleTitleChange(e) {
-        setTitle(e.target.value);
-    }
+    // function handleTitleChange(e) {
+    //     setTitle(e.target.value);
+    // }
 
-    function handleReset() {
-       Array.from(document.querySelectorAll('input')).forEach(input => input.value = '');
-       setName('');
-       setTitle('');
-       setFiles([]);
-    }
+    // function handleReset() {
+    //    Array.from(document.querySelectorAll('input')).forEach(input => input.value = '');
+    //    setName('');
+    //    setTitle('');
+    //    setFiles([]);
+    // }
     
     // function handleImageChange(e) {
     //     console.log(`Submitting files: ${e.target.files[0]}`);
     //     setImage(e.target.files[0]);
     // }
-    async function handleSubmit(e) {
-        e.preventDefault();
+    // async function handleSubmit(e) {
+    //     e.preventDefault();
 
-        setUploading(true);
+    //     setUploading(true);
 
-        const data = new FormData();
-        data.append('files', files[0]);
-        data.append('ref', 'Members');
+    //     const data = new FormData();
+    //     data.append('files', files[0]);
+    //     data.append('ref', 'Members');
 
-        const config = {
-            onUploadProgress: progressEvent => setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
-        }
-        //if (name.length !== 0 && title.length !== 0) {
-            try {
-                const imgResponse = await axios.post('http://localhost:1337/upload', data);
-                const imageId = imgResponse.data[0].id;
-                console.log(imgResponse);
-                const members = {
-                    name,
-                    title,
-                    image:imageId
-                };
-                const memberResponse = await axios.post('http://localhost:1337/members', members, config);
+    //     const config = {
+    //         onUploadProgress: progressEvent => setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
+    //     }
+    //     //if (name.length !== 0 && title.length !== 0) {
+    //         try {
+    //             const imgResponse = await axios.post('http://localhost:1337/upload', data);
+    //             const imageId = imgResponse.data[0].id;
+    //             console.log(imgResponse);
+    //             const members = {
+    //                 name,
+    //                 title,
+    //                 image:imageId
+    //             };
+    //             const memberResponse = await axios.post('http://localhost:1337/members', members, config);
 
-                if (memberResponse.status === 200) {
-                    setSubmitted(true);
-                }
+    //             if (memberResponse.status === 200) {
+    //                 setSubmitted(true);
+    //             }
 
-                if (percent === 100) {
-                    setUploading(false);
-                }
+    //             if (percent === 100) {
+    //                 setUploading(false);
+    //             }
 
-                console.log(memberResponse);
+    //             console.log(memberResponse);
 
-                setTimeout(() => setSubmitted(false), 2000);
-                handleReset();
+    //             setTimeout(() => setSubmitted(false), 2000);
+    //             handleReset();
     
-            } catch (error) {
-                setErrorMembers(error);
-            }
-        // } else {
-        //     console.log('Fields cannot be empty');
-        // }
+    //         } catch (error) {
+    //             setErrorMembers(error);
+    //         }
+    //     // } else {
+    //     //     console.log('Fields cannot be empty');
+    //     // }
         
-    }
+    // }
 
-    async function uploadImage(e) {
-        e.preventDefault();
+    // async function uploadImage(e) {
+    //     e.preventDefault();
 
-        //setSubmitted(true);
-        setUploading(true);
+    //     //setSubmitted(true);
+    //     setUploading(true);
 
-        const data = new FormData();
-        //let id = null;
-        data.append('files', files[0]);
-        //data.append('refId', id);
-        data.append('ref', 'Members');
+    //     const data = new FormData();
+    //     //let id = null;
+    //     data.append('files', files[0]);
+    //     //data.append('refId', id);
+    //     data.append('ref', 'Members');
 
-        const config = {
-            onUploadProgress: progressEvent => setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
-        }
+    //     const config = {
+    //         onUploadProgress: progressEvent => setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
+    //     }
 
-        try {
-            const response = await axios.post('http://localhost:1337/upload', data, config);
-            if (response.status === 200) {
-                setSubmitted(true);
-            }
-            if (percent === 100) {
-                setUploading(false);
-            }
-            console.log(`Uploading: ${percent}`);
-            console.log(response);
-            setTimeout(() => setSubmitted(false), 2000);
-        } catch(error) {
-            console.log(error);
-        }
+    //     try {
+    //         const response = await axios.post('http://localhost:1337/upload', data, config);
+    //         if (response.status === 200) {
+    //             setSubmitted(true);
+    //         }
+    //         if (percent === 100) {
+    //             setUploading(false);
+    //         }
+    //         console.log(`Uploading: ${percent}`);
+    //         console.log(response);
+    //         setTimeout(() => setSubmitted(false), 2000);
+    //     } catch(error) {
+    //         console.log(error);
+    //     }
         
-    }
+    // }
 
     const thumbs = files.map(file => (
         <div className='inline-flex border-gray-300 border-2 mb-4 mr-8 w-20 h-20 p-1 box-border' key={file.name}>
@@ -140,6 +140,7 @@ export default function AddMember() {
                 percent={percent}
                 setPercent={setPercent}
                 setUploading={setUploading}
+                submitted={submitted}
                 setSubmitted={setSubmitted}
                 // states={[setName, setTitle]}
             />

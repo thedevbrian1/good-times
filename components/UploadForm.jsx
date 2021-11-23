@@ -42,57 +42,64 @@ export default function UploadForm(props) {
 
     //Set state dynamically according to the state parameters passed
     
-    function handleChange(e) {
-        switch (e.target.getAttribute('name')) {
-            case 'name':
-                props.setName(e.target.value);
-                console.log(props.name);
-                break;
-            case 'description': 
-                props.setDescription(e.target.value);
-                break;
-            case 'price': 
-                props.setPrice(e.target.value);
-                break;
-            case 'duration': 
-                props.setDuration(e.target.value);
-                break;
-            case 'title': 
-                props.setTitle(e.target.value);
-                break;
-        }
-    }
+    // function handleChange(e) {
+    //     switch (e.target.getAttribute('name')) {
+    //         case 'name':
+    //             props.setName(e.target.value);
+    //             console.log(props.name);
+    //             break;
+    //         case 'description': 
+    //             props.setDescription(e.target.value);
+    //             break;
+    //         case 'price': 
+    //             props.setPrice(e.target.value);
+    //             break;
+    //         case 'duration': 
+    //             props.setDuration(e.target.value);
+    //             break;
+    //         case 'title': 
+    //             props.setTitle(e.target.value);
+    //             break;
+    //     }
+    // }
 
-    function createUploadObject() {
-        // e.preventDefault();
+    // function createUploadObject() {
+    //     // e.preventDefault();
 
-        let initialObject = {
-            name,
-            description,
-            price,
-            duration,
-            title,
-        };
+    //     let initialObject = {
+    //         name,
+    //         description,
+    //         price,
+    //         duration,
+    //         title,
+    //     };
 
-        let uploadObject = {};
+    //     let uploadObject = {};
 
-        for (const key in initialObject) {
-            if (initialObject[key] !== '') {
-                uploadObject[key] = initialObject[key];
-                // console.log(`${key}:  ${initialObject[key]}`);
-            }
-        }
+    //     for (const key in initialObject) {
+    //         if (initialObject[key] !== '') {
+    //             uploadObject[key] = initialObject[key];
+    //             // console.log(`${key}:  ${initialObject[key]}`);
+    //         }
+    //     }
 
-        //  console.log('Upload object:', uploadObject);
+    //     //  console.log('Upload object:', uploadObject);
         
-        return uploadObject;
-    }
+    //     return uploadObject;
+    // }
 
     // function handleReset() {
     //     Array.from(document.querySelectorAll('input')).forEach(input => input.value = '');
     //     setName('');
     //     setTitle('');
     //     setFiles([]);
+    // }
+    // function handleSubmitted() {
+    //     props.setSubmitted(true);
+    // }
+
+    // function completeUpload() {
+    //     props.setUploading(false)
     // }
 
     async function onSubmitForm(values){
@@ -101,39 +108,54 @@ export default function UploadForm(props) {
         values.slug = stringToSlug(values.name);
         console.log(values);
 
-        // const data = new FormData();
-        // data.append('files', files[0]);
+        const data = new FormData();
+        data.append('files', files[0]);
 
-        // const config = {
-        //     onUploadProgress: progressEvent => props.setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
-        // }
+        const config = {
+            onUploadProgress: progressEvent => props.setPercent(calculatePercent(progressEvent.loaded, progressEvent.total))
+        }
 
-        // try {
-        //     const imgResponse = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN}/upload`, data);
-        //     const imageId = imgResponse.data[0].id;
-        //     // Create object that contains data to upload next
-        //     // const dataObj = createUploadObject();
-        //     // const uploadObj = {image: imageId, ...props.uploadObject};
+        try {
+            const imgResponse = await axios.post(`${process.env.NEXT_PUBLIC_HEROKU_URL}/upload`, data);
+            const imageId = imgResponse.data[0].id;
+            // Create object that contains data to upload next
+            // const dataObj = createUploadObject();
+            // const uploadObj = {image: imageId, ...props.uploadObject};
             
-        //     values.image = imageId;
+            values.image = imageId;
 
-        //     console.log(values);
+            console.log(values);
 
-        //     const uploadResponse = await axios.post(`${process.env.NEXT_PUBLIC_DOMAIN}${props.submitPath}`, values, config);
+            const uploadResponse = await axios.post(`${process.env.NEXT_PUBLIC_HEROKU_URL}${props.submitPath}`, values, config);
 
-        //     if (uploadResponse.status === 200) {
-        //         props.setSubmitted(true);
-        //     }
+            // if (props.percent === 100) {
+            //      props.setUploading(false);
+            //      console.log('Setting uploading false');
+            //     // completeUpload();
+            // }
 
-        //     if (props.percent === 100) {
-        //         props.setUploading(false);
-        //     }
-        //     console.log(uploadResponse);
-        // } catch(error) {
-        //     console.log(error);
-        // }
+            if (uploadResponse.status === 200) {
+                if (!props.submitted) {
+                    props.setSubmitted(true);
+                    console.log('Setting submitted true');
+                }
+                 
+                // handleSubmitted();
+            }
+
+            if (props.submitted === true) {
+                props.setUploading(false);
+            }
+            
+            console.log(uploadResponse);
+        } catch(error) {
+            console.log(error);
+        }
+        props.submitted && reset();
+        setTimeout(() => props.setSubmitted(false), 4000)
+        
     }
-    props.submitted && reset();
+    
 
     const thumbs = files.map(file => (
         <div className='inline-flex border-gray-300 border-2 mb-4 mr-8 w-20 h-20 p-1 box-border' key={file.name}>
@@ -185,7 +207,7 @@ export default function UploadForm(props) {
             )}
             </Dropzone>
             <button className='bg-blue-500 hover:bg-blue-400 text-white w-24 h-10 mt-4 rounded-md'>Done</button>
-            <button className='bg-red-500 text-white focus:bg-red-400 w-24 h-10 mt-4  ml-10' type='reset'>Reset</button>
+            <button className='bg-red-500 text-white focus:bg-red-400 w-24 h-10 mt-4  ml-10 rounded-md' type='reset'>Reset</button>
         </form>
     )
 }

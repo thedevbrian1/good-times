@@ -31,9 +31,12 @@ export const headers = {
 function Home({ popularPackages, popularDestinations, testimonials }) {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   async function onSubmitForm(values) {
     // console.log(values);
+    setSubmitting(true);
+
     let config = {
       method: 'post',
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
@@ -46,14 +49,21 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
     try {
       const response = await axios(config);
       if (response.status === 200) {
+        setSubmitting(false);
         setSubmitted(true);
         console.log('Success');
+        reset();
       }
       console.log(response);
     } catch(err) {
       console.error(err);
     }
+    clearSuccessMessage();
     
+  }
+
+  function clearSuccessMessage() {
+    setTimeout(() => setSubmitted(false), 5000);
   }
   
   const responsive = {
@@ -99,7 +109,7 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
         <meta name="description" content="Book your travel destination with ease" />
       </Head>
           <div className='w-full h-screen  relative  bg-hero bg-cover bg-center'>
-            <div className='w-full lg:w-1/2 h-full bg-black bg-opacity-50 flex items-center'>
+            <div className='w-full lg:w-1/2 h-full bg-black bg-opacity-60 flex items-center'>
               <div className='flex flex-col items-center lg:items-start'>
                 <h1 className='font-display text-center lg:text-left text-white text-2xl lg:text-5xl font-bold px-4 lg:px-6'>
                   Enjoy beautiful sights and awesome experiences
@@ -137,7 +147,9 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
             <SectionTitle title='Most Popular Packages' />
             <div className='w-full flex flex-col lg:flex-row lg:flex-wrap items-center  justify-between lg:justify-evenly px-4 lg:px-16 py-8'>
               {
-                popularPackages.map(destination => (
+                popularPackages
+                  .slice(0,6)
+                  .map(destination => (
                   <Card destination={destination} key={destination.id} />
                 ))
               }
@@ -178,7 +190,9 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
             <SectionTitle title='Popular Destinations' />
             <div className='p-2 md:p-10 flex flex-col md:flex-row items-center md:justify-evenly'>
               {
-                popularDestinations.map(popularDestination => (
+                popularDestinations
+                  .slice(0,4)
+                  .map(popularDestination => (
                   <DestinationImg destination={popularDestination} key={popularDestination.id} />
                 ))
               }
@@ -192,7 +206,8 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
               <Carousel
                 swipeable={true}
                 draggable={true}
-                showDots={true}
+                // arrows={false}
+                // showDots={true}
                 responsive={responsive}
                 ssr={true}
                 infinite={true}
@@ -203,7 +218,7 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
                 customTransition="all .5"
                 transitionDuration={500}
                 containerClass="carousel-container"
-                removeArrowOnDeviceType={["tablet", "mobile"]}
+                removeArrowOnDeviceType={["desktop", "largeDesktop"]}
                 renderButtonGroupOutside={true}
                 renderDotsOutside={true}
                 dotListClass="custom-dot-list-style"
@@ -241,7 +256,6 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
                     })}
                     placeholder='John Doe' 
                     className={`font-display px-6 w-full rounded-md py-2 bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 ${errors.name ? 'ring-2 ring-red-500' : null}` }
-                    //onChange={handleFullNameChange}
                   />
                   <span className='text-red-700 text-sm py-2'>{errors ?.name ?.message}</span>
                 </div>
@@ -274,16 +288,11 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
                     type="text" 
                     id='phone' 
                     name='phone'
-                    {...register('phone', {
-                      pattern: {
-                        value: /(\+254|^){1}[ ]?[7]{1}([0-3]{1}[0-9]{1})[ ]?[0-9]{3}[ ]?[0-9]{3}\z/i,
-                        message: 'Invalid phone number format'
-                      }
-                    })}
+                    {...register('phone')}
                     placeholder='0712 345 678' 
                     className='font-display px-6 w-full rounded-md py-2 bg-gray-100 text-gray-700 focus:outline-none' 
                   />
-                  <span className="text-red-700 text-sm py-2">{errors?.phone?.message}</span>
+                  {/* <span className="text-red-700 text-sm py-2">{errors?.phone?.message}</span> */}
                 </div>
                 
                 <div className='mb-4'>
@@ -305,13 +314,23 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
                   <span className='text-red-700 text-sm py-2'>{errors?.message?.message}</span>
                 </div>
                 
-                <button type='submit' className='font-display w-full mt-6 py-2 rounded-md bg-blue-500 text-gray-100 hover:bg-blue-600 focus:outline-none'>Submit</button>
+                <button type='submit' className='font-display w-full mt-6 py-2 rounded-md bg-gradient-to-r from-brown to-red-500 text-gray-100 hover:bg-blue-600 focus:outline-none'>Submit</button>
               </form>
-               {
-                 submitted && (
-                   <TaskSuccessful text='Email sent successfully' />
-                 )
-               } 
+              <div className='mt-3 flex justify-center'>
+                {
+                  submitting && (
+                    <span className='text-black'>Submitting...</span>
+                  )
+                }
+              </div>
+              <div className='mt-3 transition duration-300 ease-in-out'>
+                {
+                  submitted && (
+                    <TaskSuccessful text='Email sent successfully' />
+                  )
+                } 
+              </div>
+               
             </div>
             </div>
           </div>

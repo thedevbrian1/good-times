@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import NavBar from "./Nav";
-import Drawer from "./Drawer";
 
 export default function Layout({ children }) {
     const [isMobile, setIsMobile] = useState(false);

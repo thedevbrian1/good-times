@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 
-export default async function(req, res) {
+export default async function book(req, res) {
     const { name, phone, date, capacity, currentPackage } = req.body;
 
     const transporter = nodemailer.createTransport({
@@ -16,7 +16,7 @@ export default async function(req, res) {
     try {
         const emailResponse = await transporter.sendMail({
             from: process.env.NEXT_PUBLIC_USER,
-            to: 'mwangiignatius61@gmail.com',
+            to: 'brayomwas95@gmail.com',
             subject: `Book package`,
             html: `
                 <p>I would like to book this package: ${currentPackage} </p><br>

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export default async function(req, res) {
+export default async function contact(req, res) {
     const { name, email, phone, message } = req.body;
     // console.log(req.body);
 
@@ -17,7 +17,7 @@ export default async function(req, res) {
     try {
         const emailResponse = await transporter.sendMail({
             from: process.env.NEXT_PUBLIC_USER,
-            to: 'mwangiignatius61@gmail.com',
+            to: 'brayomwas95@gmail.com',
             subject: `Contact form from ${name}`,
             html: `<p>You have received a new contact form submission</p><br>
                     <p><strong>Name: </strong> ${name}</p><br>

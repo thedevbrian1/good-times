@@ -46,7 +46,7 @@ function DesktopNav() {
                 {navLinks.map((item, index) => (
                     <li className='inline-block px-6' key={index}>
                         <Link href={item.path}>
-                            <a className='font-display text-white hover:text-brown text-lg uppercase font-normal transition duration-300 ease-in-out'>{item.name}</a>
+                            <a className='font-display text-white hover:text-brown text-lg uppercase font-bold transition duration-300 ease-in-out'>{item.name}</a>
                         </Link>
                     </li>
                 ))}

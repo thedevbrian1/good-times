@@ -9,6 +9,7 @@ import TaskSuccessful from '../../components/TaskSuccessful';
 function Dest({ destination }) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [submitted, setSubmitted] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
     // const myLoader = ({ src }) => {
     //     return `${process.env.NEXT_PUBLIC_DOMAIN}${src}`;
     // };
@@ -31,9 +32,14 @@ function Dest({ destination }) {
         return str;
     }
 
-    console.log(stringToSlug(destination.name));
+    // console.log(stringToSlug(destination.name));
+
+    function clearSuccessMessage() {
+        setTimeout(() => setSubmitted(false), 5000);
+    }
     
     async function onSubmitForm(values) {
+        setSubmitting(true);
         values.currentPackage = destination.name;
         console.log(values);
         let config = {
@@ -48,13 +54,16 @@ function Dest({ destination }) {
         try {
             const response = await axios(config);
             if (response.status === 200) {
+                setSubmitting(false);
                 setSubmitted(true);
                 console.log('Success');
+                reset();
             }
             console.log(response);
         }catch(err) {
             console.error(err);
         }
+        clearSuccessMessage();
     }
       //console.log(destination);
     return (
@@ -144,12 +153,22 @@ function Dest({ destination }) {
                         <button type='submit' className='w-full mt-6 py-2 rounded-md bg-blue-500 text-gray-100 hover:bg-blue-600 focus:outline-none'>Submit</button>
                     </form>
                 </div>
-                <div className='mt-5'>
-                    {
-                        submitted && (
-                            <TaskSuccessful text='Booking successful' />
-                        )
-                    }
+                <div className='mt-5 flex justify-center'>
+                    <div>
+                        {
+                            submitting && (
+                                <span className='text-black'>Submitting...</span>
+                            )
+                        }
+                    </div>
+                    <div>
+                        {
+                            submitted && (
+                                <TaskSuccessful text='Booking successful' />
+                            )
+                        }
+                    </div>
+                    
                 </div>
                 
             </div>
