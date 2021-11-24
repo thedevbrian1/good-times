@@ -5,7 +5,7 @@ import Head from 'next/head';
 import SectionTitle from "../components/SectionTitle";
 
 function About ({ members }) {
-    console.log(members);
+    //console.log(members);
     return (
         
         <>

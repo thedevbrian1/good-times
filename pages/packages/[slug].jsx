@@ -41,7 +41,7 @@ function Dest({ destination }) {
     async function onSubmitForm(values) {
         setSubmitting(true);
         values.currentPackage = destination.name;
-        console.log(values);
+        // console.log(values);
         let config = {
             method: 'POST',
             url: `${process.env.NEXT_PUBLIC_API_URL}/api/book`,

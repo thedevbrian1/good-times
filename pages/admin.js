@@ -37,10 +37,10 @@ function Admin({ packages, popularDestinations, members }) {
     const [showDestinations, setShowDestinations] = useState(false);
     const [showMembers, setShowMembers] = useState(false);
 
-    console.log(packages);
-    console.log(popularDestinations);
-    console.log(members);
-    console.log(deletePath);
+    // console.log(packages);
+    // console.log(popularDestinations);
+    // console.log(members);
+    // console.log(deletePath);
     function toggleAddPackage() {
         setShowAddPackage(!showAddPackage);
     }
@@ -70,9 +70,9 @@ function Admin({ packages, popularDestinations, members }) {
     }
 
     async function handleDelete() {
-        console.log(`Delete ${process.env.NEXT_PUBLIC_HEROKU_URL}/${deletePath}`);
+        // console.log(`Delete ${process.env.NEXT_PUBLIC_HEROKU_URL}/${deletePath}`);
         const response = await axios.delete(`${process.env.NEXT_PUBLIC_HEROKU_URL}/${deletePath}`)
-        console.log(response);
+        // console.log(response);
         setSuccessfulDelete(true);
         setTimeout(() => {
             setSuccessfulDelete(false); 
@@ -315,7 +315,7 @@ export async function getServerSideProps(ctx) {
             },
             body: JSON.stringify(loginInfo)
         });
-        const loginResponse = await login.json();
+        const loginResponse = await login.json(); 
         console.log(loginResponse);
         const [packages, popularDestinations, members] = await Promise.all([
             fetch(`${process.env.NEXT_PUBLIC_HEROKU_URL}/packages`, {

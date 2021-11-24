@@ -1,5 +1,5 @@
 import axios from "axios";
-import image from "next/image";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Dropzone from "react-dropzone";
 import { useForm } from 'react-hook-form';
@@ -29,84 +29,13 @@ function stringToSlug(str) {
 export default function UploadForm(props) {
     const { register, handleSubmit, formState: { errors }, reset} = useForm();
 
-    // const [name, setName] = useState('Brian');
-    // const [description, setDescription] = useState('');
-    // const [price, setPrice] = useState('20000');
-    // const [duration, setDuration] = useState('');
-    // const [title, setTitle] = useState('CTO');
     const [files, setFiles] = useState([]);
-
-    // const statesArray = [name, description, price, duration, title];
-
-    // console.log('States: ', props.states); 
-
-    //Set state dynamically according to the state parameters passed
-    
-    // function handleChange(e) {
-    //     switch (e.target.getAttribute('name')) {
-    //         case 'name':
-    //             props.setName(e.target.value);
-    //             console.log(props.name);
-    //             break;
-    //         case 'description': 
-    //             props.setDescription(e.target.value);
-    //             break;
-    //         case 'price': 
-    //             props.setPrice(e.target.value);
-    //             break;
-    //         case 'duration': 
-    //             props.setDuration(e.target.value);
-    //             break;
-    //         case 'title': 
-    //             props.setTitle(e.target.value);
-    //             break;
-    //     }
-    // }
-
-    // function createUploadObject() {
-    //     // e.preventDefault();
-
-    //     let initialObject = {
-    //         name,
-    //         description,
-    //         price,
-    //         duration,
-    //         title,
-    //     };
-
-    //     let uploadObject = {};
-
-    //     for (const key in initialObject) {
-    //         if (initialObject[key] !== '') {
-    //             uploadObject[key] = initialObject[key];
-    //             // console.log(`${key}:  ${initialObject[key]}`);
-    //         }
-    //     }
-
-    //     //  console.log('Upload object:', uploadObject);
-        
-    //     return uploadObject;
-    // }
-
-    // function handleReset() {
-    //     Array.from(document.querySelectorAll('input')).forEach(input => input.value = '');
-    //     setName('');
-    //     setTitle('');
-    //     setFiles([]);
-    // }
-    // function handleSubmitted() {
-    //     props.setSubmitted(true);
-    // }
-
-    // function completeUpload() {
-    //     props.setUploading(false)
-    // }
 
     async function onSubmitForm(values){
         props.setUploading(true);
         //props.setSubmitted(true);
         values.slug = stringToSlug(values.name);
-        console.log(values);
+        // console.log(values);
 
         const data = new FormData();
         data.append('files', files[0]);
@@ -124,7 +53,7 @@ export default function UploadForm(props) {
             
             values.image = imageId;
 
-            console.log(values);
+            // console.log(values);
 
             const uploadResponse = await axios.post(`${process.env.NEXT_PUBLIC_HEROKU_URL}${props.submitPath}`, values, config);
 
@@ -137,7 +66,7 @@ export default function UploadForm(props) {
             if (uploadResponse.status === 200) {
                 if (!props.submitted) {
                     props.setSubmitted(true);
-                    console.log('Setting submitted true');
+                    // console.log('Setting submitted true');
                 }
                  
                 // handleSubmitted();
@@ -160,7 +89,9 @@ export default function UploadForm(props) {
     const thumbs = files.map(file => (
         <div className='inline-flex border-gray-300 border-2 mb-4 mr-8 w-20 h-20 p-1 box-border' key={file.name}>
             <div className='flex overflow-hidden min-w-0'>
-                <img src={file.preview} alt="Thumbnail" className='block w-auto h-full' />
+                {/* <img src={file.preview} alt="Thumbnail" className='block w-auto h-full' /> */}
+                {/* Make sure image preview is visible */}
+                <Image src={file.preview} layout='fill' alt='Thumbnail' className='block w-auto h-full ' />
             </div>
         </div>
     ))
@@ -198,7 +129,7 @@ export default function UploadForm(props) {
                 <section className='border-2 border-dashed border-gray-500p-8'>
                     <div {...getRootProps({ className: 'dropzone border-2 border-dashed border-gray-500 bg-gray-100 p-20'})}>
                         <input {...getInputProps()} />
-                        <p className='text-gray-500'>Drag 'n' drop somefiles here, or click to select files</p>
+                        <p className='text-gray-500'>Drag &apos;n&apos; drop somefiles here, or click to select files</p>
                     </div>
                     <aside className='flex flex-row flex-wrap mt-4'>
                         {thumbs}

@@ -92,10 +92,6 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
       partialVisibilityGutter: 30,
     }
   };
-
-  useEffect(() => {
-    console.log(`Screen width: ${window.screen.width}, Screen height: ${window.screen.height}`);
-  }, []);
   
   // console.log(popularPackages);
   // console.log(popularDestinations);
@@ -115,7 +111,7 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
                   Enjoy beautiful sights and awesome experiences
                 </h1>
                 <h2 className='font-display text-center lg:text-left text-white text-lg lg:text-xl px-6 py-4 lg:py-8 opacity-80'>
-                  Whether it's a one day, weekend-long, or holiday adventure, we've got you covered.
+                  Whether it&apos;s a one day, weekend-long, or holiday adventure, we&apos;ve got you covered.
                 </h2>
                 <div className='w-3/4 lg:w-96 mx-4 lg:pl-2'>
                   <ul className='flex justify-evenly lg:justify-between'>
@@ -234,7 +230,7 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
           <div className='relative flex flex-col lg:flex-row w-full   mt-16 lg:mt-32 '>
 
             <div className='py-8 lg:py-0 px-2 bg-black w-full lg:w-1/2 flex flex-col justify-center items-center'>
-              <h2 className='font-display text-white text-2xl lg:text-5xl font-bold mt-12'>We'd love to hear from you</h2>
+              <h2 className='font-display text-white text-2xl lg:text-5xl font-bold mt-12'>We&lsquo;d love to hear from you</h2>
               <Image src='/contact-us.svg' alt='svg illustration consisting of call, text and location orange icons' width={280} height={280} />
             </div>
 

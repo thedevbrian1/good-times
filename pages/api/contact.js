@@ -17,7 +17,7 @@ export default async function contact(req, res) {
     try {
         const emailResponse = await transporter.sendMail({
             from: process.env.NEXT_PUBLIC_USER,
-            to: 'brayomwas95@gmail.com',
+            to: 'ignatius939@gmail.com',
             subject: `Contact form from ${name}`,
             html: `<p>You have received a new contact form submission</p><br>
                     <p><strong>Name: </strong> ${name}</p><br>

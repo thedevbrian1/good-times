@@ -1,4 +1,8 @@
 import { useForm } from 'react-hook-form'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig();
+
 export default function Login() {
     const {register, handleSubmit, formState: { errors }, reset } = useForm();
     function onSubmitForm(values) {

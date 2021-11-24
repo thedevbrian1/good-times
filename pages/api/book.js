@@ -16,7 +16,7 @@ export default async function book(req, res) {
     try {
         const emailResponse = await transporter.sendMail({
             from: process.env.NEXT_PUBLIC_USER,
-            to: 'brayomwas95@gmail.com',
+            to: 'ignatius939@gmail.com',
             subject: `Book package`,
             html: `
                 <p>I would like to book this package: ${currentPackage} </p><br>
