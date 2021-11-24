@@ -150,7 +150,7 @@ function Dest({ destination }) {
                             placeholder='1' 
                         />
                         </div>
-                        <button type='submit' className='w-full mt-6 py-2 rounded-md bg-blue-500 text-gray-100 hover:bg-blue-600 focus:outline-none'>Submit</button>
+                        <button type='submit' className='w-full mt-6 py-2 rounded-md bg-gradient-to-r from-brown to-red-500 text-gray-100 focus:outline-none'>Submit</button>
                     </form>
                 </div>
                 <div className='mt-5 flex justify-center'>
