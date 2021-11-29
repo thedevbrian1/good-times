@@ -39,7 +39,8 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
 
     let config = {
       method: 'post',
-      url: `${process.env.NEXT_PUBLIC_API_URL}/api/send-email`,
+      // url: `${process.env.NEXT_PUBLIC_API_URL}/api/send-email`,
+      url: 'https://good-times-hquvcmblx-thedevbrian1.vercel.app/api/send-email',
       headers: {
         'Content-Type': 'application/json',
       },
