@@ -33,14 +33,21 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  let postUrl;
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    postUrl = process.env.NEXT_PUBLIC_API_URL;
+  } else {
+    postUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
+  }
   async function onSubmitForm(values) {
     // console.log(values);
     setSubmitting(true);
 
     let config = {
       method: 'post',
-      // url: `${process.env.NEXT_PUBLIC_API_URL}/api/send-email`,
-      url: 'https://good-times-hquvcmblx-thedevbrian1.vercel.app/api/send-email',
+      url: `${postUrl}/api/contact`,
+      // url: `${process.env.NEXT_PUBLIC_API_URL}/api/contact`,
+      // url: 'https://good-times-hquvcmblx-thedevbrian1.vercel.app/api/send-email',
       headers: {
         'Content-Type': 'application/json',
       },
