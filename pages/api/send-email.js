@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_EMAIL_API_KEY);
 
 
 
-export default async(req, res) => {
+export default async function sendEmail(req, res) {
     const { name, email, phone, message } = req.body;
 
     console.log(req.body);
