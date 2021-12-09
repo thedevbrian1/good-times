@@ -35,7 +35,7 @@ function Home({ popularPackages, popularDestinations, testimonials }) {
 
   let postUrl;
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    postUrl = process.env.NEXT_PUBLIC_API_URL;
+    postUrl = process.env.NEXT_PUBLIC_LOCAL_URL;
   } else {
     postUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
   }
@@ -368,7 +368,8 @@ export async function getStaticProps(context) {
         .then(parseJSON)
     ]);
     return {
-      props: {popularPackages, popularDestinations, testimonials}
+      props: {popularPackages, popularDestinations, testimonials},
+      revalidate: 345600,
     };
   }catch(error) {
     console.log(error, "Fetching static props failed");
