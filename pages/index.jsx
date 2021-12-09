@@ -368,7 +368,8 @@ export async function getStaticProps(context) {
         .then(parseJSON)
     ]);
     return {
-      props: {popularPackages, popularDestinations, testimonials}
+      props: {popularPackages, popularDestinations, testimonials},
+      revalidate: 345600,
     };
   }catch(error) {
     console.log(error, "Fetching static props failed");

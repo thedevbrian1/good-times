@@ -60,7 +60,8 @@ export async function getStaticProps() {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_HEROKU_URL}/packages`);
         const destinations = res.data;
         return {
-            props: { destinations }
+            props: { destinations },
+            revalidate: 345600,
         };
     }catch(error) {
         console.log(error, 'Cannot retrieve packages');
