@@ -55,14 +55,16 @@ function Packages({ destinations, error }) {
     
 };
 
-Packages.getInitialProps = async ctx => {
+export async function getStaticProps() {
     try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_HEROKU_URL}/packages`);
         const destinations = res.data;
-        return { destinations };
-    } catch(error) {
-        return { error };
+        return {
+            props: { destinations }
+        };
+    }catch(error) {
+        console.log(error, 'Cannot retrieve packages');
+        throw error;
     }
 }
-
 export default Packages;
